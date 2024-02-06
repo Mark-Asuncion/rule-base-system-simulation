@@ -1,0 +1,67 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://b8eo80kgchfhr"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_rgxyv"]
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_o5qsn"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_r2o3e"]
+parameter_name = "tint"
+default_value_enabled = true
+default_value = Color(0.411231, 0.49691, 0.957491, 1)
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_yvt50"]
+output_port_for_preview = 0
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+op_type = 2
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_ich8o"]
+input_name = "texture"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform vec4 tint : source_color = vec4(0.411231, 0.496910, 0.957491, 1.000000);
+
+
+
+void fragment() {
+// Input:11
+	vec2 n_out11p0 = UV;
+
+
+	vec4 n_out10p0;
+// Texture2D:10
+	n_out10p0 = texture(TEXTURE, n_out11p0);
+
+
+// ColorParameter:12
+	vec4 n_out12p0 = tint;
+
+
+// VectorOp:7
+	vec4 n_out7p0 = n_out10p0 * n_out12p0;
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out7p0.xyz);
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/7/node = SubResource("VisualShaderNodeVectorOp_yvt50")
+nodes/fragment/7/position = Vector2(100, 20)
+nodes/fragment/9/node = SubResource("VisualShaderNodeInput_ich8o")
+nodes/fragment/9/position = Vector2(-580, 0)
+nodes/fragment/10/node = SubResource("VisualShaderNodeTexture_rgxyv")
+nodes/fragment/10/position = Vector2(-300, -80)
+nodes/fragment/11/node = SubResource("VisualShaderNodeInput_o5qsn")
+nodes/fragment/11/position = Vector2(-620, -80)
+nodes/fragment/12/node = SubResource("VisualShaderNodeColorParameter_r2o3e")
+nodes/fragment/12/position = Vector2(-320, 140)
+nodes/fragment/connections = PackedInt32Array(7, 0, 0, 0, 9, 0, 10, 2, 11, 0, 10, 0, 10, 0, 7, 0, 12, 0, 7, 1)

@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmylso8xlkkwm"]
+
+[ext_resource type="Script" path="res://scripts/UI.cs" id="1_4wea6"]
+[ext_resource type="Texture2D" uid="uid://b8oevwyp6a5d5" path="res://img/time-frame.png" id="2_3yj5p"]
+[ext_resource type="Theme" uid="uid://wh8ga81f4mel" path="res://theme/font.tres" id="2_j7e0g"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f3wo7"]
+texture = ExtResource("2_3yj5p")
+
+[node name="ui" type="CanvasLayer"]
+script = ExtResource("1_4wea6")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_j7e0g")
+
+[node name="TimeFrame" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = 911.0
+offset_top = 24.0
+offset_right = 1129.76
+offset_bottom = 154.455
+theme_override_styles/panel = SubResource("StyleBoxTexture_f3wo7")
+
+[node name="TimeLabel" type="Label" parent="Control/TimeFrame"]
+layout_mode = 2
+offset_left = 28.0
+offset_top = 26.0
+offset_right = 196.0
+offset_bottom = 47.0
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "12:00am"
+
+[node name="TempLabel" type="Label" parent="Control/TimeFrame"]
+layout_mode = 2
+offset_left = 29.0
+offset_top = 85.0
+offset_right = 197.0
+offset_bottom = 106.0
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "00°C"
+horizontal_alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 71.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="TimeContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 12
+
+[node name="OverrideButton" type="Button" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+toggle_mode = true
+text = "Override
+"
+
+[node name="OverridePanel" type="Panel" parent="Control/MarginContainer/OverrideButton"]
+layout_mode = 1
+offset_top = 52.0
+offset_right = 40.0
+offset_bottom = 92.0

@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rule_base_system_sim", "rule_base_system_sim.csproj", "{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{1F0F6E8C-4C48-4EA2-BDBD-68D3D1CEC124}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
