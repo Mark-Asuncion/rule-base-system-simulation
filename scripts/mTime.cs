@@ -23,7 +23,7 @@ public class mTime
         int hr = ((int)hour == 0)? 12:(int) hour;
         int min = t % 60;
         String suffix = "am";
-        if (t >= 12)
+        if (t >= 720)
             suffix = "pm";
         String h = (hr < 10)? "0"+hr:""+hr;
         String m = (min < 10)? "0"+min:""+min;

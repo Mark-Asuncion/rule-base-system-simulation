@@ -50,6 +50,7 @@ move_back={
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 viewport/hdr_2d=true
 occlusion_culling/use_occlusion_culling=true

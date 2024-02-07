@@ -9,7 +9,12 @@ public partial class Player : CharacterBody3D
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	[Export] private Node3D cam_rot_orig;
 	[Export] private float cam_speed = 0.01f;
+	[Export] private float min_x_rotation = 45;
 
+    private float ToRadians(float v)
+	{
+		return v * MathF.PI / 180f;
+	}
     public override void _Ready()
     {
         base._Ready();
@@ -27,8 +32,12 @@ public partial class Player : CharacterBody3D
 			return;
 		if (@event is InputEventMouseMotion) {
 			var @mouse_motion = (InputEventMouseMotion) @event;
-			this.RotateY(-@mouse_motion.Relative.X * cam_speed);
-			cam_rot_orig.RotateX(-@mouse_motion.Relative.Y * cam_speed);
+			RotateY(-@mouse_motion.Relative.X * cam_speed);
+			var nx = new Vector2(cam_rot_orig.Rotation.X + (-@mouse_motion.Relative.Y * cam_speed),0);
+			float min_rot = ToRadians(min_x_rotation);
+			nx = nx.Clamp(new Vector2(-min_rot, 0), new Vector2(min_rot, 0));
+			cam_rot_orig.Rotation = new Vector3(nx.X, 0, 0);
+			// GD.Print(cam_rot_orig.Rotation);
 		}
 	}
 	public override void _PhysicsProcess(double delta)

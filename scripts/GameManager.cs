@@ -8,6 +8,7 @@ public partial class GameManager : Node3D
 	UI ui;
 	public mNotification notification;
 	[Export] float time_scale = 1f;
+	[Export] float time_scale_step = 0.25f;
 	Timer timer;
 	public mTime time;
 	public float TimeScale {
@@ -34,6 +35,22 @@ public partial class GameManager : Node3D
 		ui.SetTimeLabel(time.ToString());
 
 		timer.Timeout += _TimeChanged;
+	}
+    public override void _UnhandledKeyInput(InputEvent @event)
+    {
+		if (Input.MouseMode == Input.MouseModeEnum.Captured) {
+			@event = @event as InputEventKey;
+			if (@event == null)
+				return;
+			if (@event.IsActionPressed("ui_left")) {
+				TimeScale = TimeScale - time_scale_step;
+				notification.CreateNotif("Decreased Time Speed to " + TimeScale);
+			}
+			if (@event.IsActionPressed("ui_right")) {
+				TimeScale = TimeScale + time_scale_step;
+				notification.CreateNotif("Increased Time Speed to " + TimeScale);
+			}
+		}
 	}
 	public void _TimeChanged()
 	{

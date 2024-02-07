@@ -14,7 +14,7 @@ public partial class Lights : Node3D
 		// rule.time_on = new mTime(18,00);
 		// rule.time_off = new mTime(22,00);
 
-		rule.time_on = new mTime(12,30);
+		rule.time_on = new mTime(18,30);
 		rule.time_off = new mTime(22,00);
 
 		rule.On += _on;

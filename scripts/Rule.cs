@@ -32,11 +32,10 @@ public partial class Rule: Node3D {
                 is_on = false;
 
         var notif = GetTree().Root.GetChild<GameManager>(0).notification;
-        GD.Print("notif ", notif);
         if (is_on) {
             EmitSignal(SignalName.On);
             if (!status)
-                notif.CreateNotif(rule_name + " Turned on");
+                notif.CreateNotif(time_on + ":: " + rule_name + " Turned on");
 
             status = true;
         }
@@ -44,7 +43,7 @@ public partial class Rule: Node3D {
             EmitSignal(SignalName.Off);
             if (status) {
                 status = false;
-                notif.CreateNotif(rule_name + " Turned off");
+                notif.CreateNotif(time_off + ":: " + rule_name + " Turned off");
             }
         }
     }
