@@ -10,7 +10,6 @@ public partial class Player : CharacterBody3D
 	[Export] private Node3D cam_rot_orig;
 	[Export] private float cam_speed = 0.01f;
 	[Export] private float min_x_rotation = 45;
-
     private float ToRadians(float v)
 	{
 		return v * MathF.PI / 180f;
@@ -19,7 +18,16 @@ public partial class Player : CharacterBody3D
     {
         base._Ready();
 		cam_rot_orig = GetNode<Node3D>("Node3D");
-		Input.MouseMode = Input.MouseModeEnum.Captured;
+		var gm = GetTree().Root.GetChild<GameManager>(0);
+		SetPhysicsProcess(false);
+		gm.Pause += (bool pause) => {
+			if (pause)
+				SetPhysicsProcess(false);
+			else {
+				Input.MouseMode = Input.MouseModeEnum.Captured;
+				SetPhysicsProcess(true);
+			}
+		};
 	}
 	public override void _UnhandledInput(InputEvent @event)
 	{
@@ -37,7 +45,6 @@ public partial class Player : CharacterBody3D
 			float min_rot = ToRadians(min_x_rotation);
 			nx = nx.Clamp(new Vector2(-min_rot, 0), new Vector2(min_rot, 0));
 			cam_rot_orig.Rotation = new Vector3(nx.X, 0, 0);
-			// GD.Print(cam_rot_orig.Rotation);
 		}
 	}
 	public override void _PhysicsProcess(double delta)

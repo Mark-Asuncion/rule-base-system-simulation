@@ -25,8 +25,16 @@ public partial class Roomba : CharacterBody3D
         base._Ready();
 		rule = GetNode<Rule>("Rule");
 		rule.rule_name = "Roomba";
-		rule.time_on = new mTime(8,3);
-		rule.time_off = new mTime(9,0);
+		rule.IsOn = (GameManager ctx) => {
+			bool ret = false;
+			if (ctx.time.T >= new mTime(8,0).T) {
+				ret = true;
+			}
+			if (ctx.time.T >= new mTime(10,0).T) {
+				ret = false;
+			}
+			return ret;
+		};
 
 		rule.On += _on;
 		rule.Off += _off;

@@ -1,29 +1,20 @@
-[gd_scene load_steps=13 format=3 uid="uid://eib37j0rr6rg"]
+[gd_scene load_steps=15 format=3 uid="uid://eib37j0rr6rg"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_t2m3s"]
 [ext_resource type="PackedScene" uid="uid://bmylso8xlkkwm" path="res://scene/ui.tscn" id="2_e03d3"]
-[ext_resource type="Shader" uid="uid://cixrulreibb8t" path="res://shader/sun_moon.tres" id="3_2qyhi"]
 [ext_resource type="PackedScene" uid="uid://dme5wlla72ogk" path="res://scene/notification.tscn" id="3_847b5"]
 [ext_resource type="Shader" path="res://shader/sky.gdshader" id="4_yaocg"]
 [ext_resource type="PackedScene" uid="uid://bbf7x1qnaq6l7" path="res://scene/house.tscn" id="6_ofbxh"]
+[ext_resource type="Texture2D" uid="uid://cs5n58xm3yjlh" path="res://shader/skybox.tres" id="6_p3dk3"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="7_dmmqi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lsbr0"]
 height = 2.71725
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q0c64"]
-render_priority = 0
-shader = ExtResource("3_2qyhi")
-shader_parameter/sun_color = Color(0.854902, 0.670588, 0.423529, 1)
-shader_parameter/intensity = 70.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1845y"]
 shader = ExtResource("4_yaocg")
-shader_parameter/morning = Color(0.627451, 0.792157, 0.976471, 1)
-shader_parameter/sunset = Color(0.994204, 0.619559, 0.388858, 1)
-shader_parameter/night = Color(0.0588235, 0.235294, 0.372549, 1)
-shader_parameter/ratio = null
-shader_parameter/offset = 0.5
+shader_parameter/ratio = 0.26
+shader_parameter/gradient = ExtResource("6_p3dk3")
 
 [sub_resource type="Sky" id="Sky_obox2"]
 sky_material = SubResource("ShaderMaterial_1845y")
@@ -31,6 +22,92 @@ sky_material = SubResource("ShaderMaterial_1845y")
 [sub_resource type="Environment" id="Environment_0bhpf"]
 background_mode = 2
 sky = SubResource("Sky_obox2")
+ambient_light_sky_contribution = 0.0
+
+[sub_resource type="Animation" id="Animation_d1ndf"]
+resource_name = "intro"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_6ploe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qny43"]
+_data = {
+"RESET": SubResource("Animation_6ploe"),
+"intro": SubResource("Animation_d1ndf")
+}
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0955926)
@@ -38,11 +115,12 @@ script = ExtResource("1_t2m3s")
 time_scale = 10.0
 
 [node name="ui" parent="." instance=ExtResource("2_e03d3")]
+visible = false
 
 [node name="Notification" parent="." instance=ExtResource("3_847b5")]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.17726, 2.05867, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.81056, 1.429, -1.27922)
 script = ExtResource("7_dmmqi")
 cam_speed = 0.005
 
@@ -55,21 +133,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.008, -0.195956)
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Node3D"]
 
 [node name="Timer" type="Timer" parent="."]
-autostart = true
-
-[node name="Sun" type="CSGSphere3D" parent="."]
-transform = Transform3D(0.954787, -0.0758967, -0.28744, 0.0437629, 0.992212, -0.11662, 0.294053, 0.0987684, 0.950672, -48.959, 55.513, -318.56)
-visible = false
-radius = 4.96036
-material = SubResource("ShaderMaterial_q0c64")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun"]
-transform = Transform3D(0.977545, 0.0151287, 0.210181, 0.0674173, 0.922543, -0.37996, -0.19965, 0.385598, 0.900808, 0, 0, 0)
-visible = false
-light_energy = 11.505
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0bhpf")
 
+[node name="SunMoon" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.682149, 0.186205, -0.707107, -0.682149, 0.186205, 0.707107, 0.263334, 0.964705, -1.4013e-45, -43.5587, 23.9249, -0.0955926)
+
 [node name="house" parent="." instance=ExtResource("6_ofbxh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.31451, 0, 3.99248)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 2
+offset_left = -31.0
+offset_top = -11.0
+offset_right = 1208.0
+offset_bottom = 680.0
+color = Color(0.0846899, 0.0846899, 0.0846899, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qny43")
+}
+autoplay = "intro"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_end"]
