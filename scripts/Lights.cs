@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Lights : Node3D
@@ -20,8 +21,8 @@ public partial class Lights : Node3D
 		rule[1] = GetNode<Rule>("Rule2");
 		spotlight = GetNode<OmniLight3D>("LightNode");
 		area = GetNode<Area3D>("Area3D");
-		rule[0].rule_name = "Lights";
-		rule[1].rule_name = "Lights";
+		rule[0].name = "Lights";
+		rule[1].name = "Lights";
 		rule[1].notif_prefix = "Movement Detection";
 		rule[1].type = Rule.Type.CustomOff;
 		rule[0].IsOn = (GameManager ctx) => {
@@ -62,6 +63,11 @@ public partial class Lights : Node3D
 			on_by_move_timer = null;
 		};
 	}
+    public override void _PhysicsProcess(double delta)
+    {
+        // if (on_by_move_timer != null)
+		// 	GD.PrintS("TimeLeft", on_by_move_timer.TimeLeft);
+    }
     public bool MovementDetection(GameManager _ctx) {
 		var nodes = area.GetOverlappingBodies();
 		bool ret = false;
@@ -76,6 +82,6 @@ public partial class Lights : Node3D
 				movable_obj[body] = body.Position;
 			}
 		}
-		return ret;
+		return ret && !rule[0].Status;
 	}
 }

@@ -9,9 +9,12 @@ public partial class UI : CanvasLayer
 	{
 		time_label = GetNode<Label>("Control/TimeFrame/TimeLabel");
 		temp_label = GetNode<Label>("Control/TimeFrame/TempLabel");
-	}
-	public void SetTimeLabel(String time)
-	{
-		time_label.Text = time;
+		var gm = GetTree().Root.GetChild<GameManager>(0);
+		gm.DayTimeChanged += (GameManager ctx) => {
+			time_label.Text = ctx.time.ToString();
+		};
+		gm.TempChanged += (GameManager ctx) => {
+			temp_label.Text = ctx.temp.ToString();
+		};
 	}
 }

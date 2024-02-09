@@ -24,6 +24,45 @@ background_mode = 2
 sky = SubResource("Sky_obox2")
 ambient_light_sky_contribution = 0.0
 
+[sub_resource type="Animation" id="Animation_6ploe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_d1ndf"]
 resource_name = "intro"
 length = 2.0
@@ -64,45 +103,6 @@ tracks/2/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_6ploe"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ui:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qny43"]
 _data = {
 "RESET": SubResource("Animation_6ploe"),
@@ -113,6 +113,8 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0955926)
 script = ExtResource("1_t2m3s")
 time_scale = 10.0
+time_in_24hr = PackedInt32Array(6, 0)
+temp_max_change = 5.0
 
 [node name="ui" parent="." instance=ExtResource("2_e03d3")]
 visible = false
@@ -120,7 +122,7 @@ visible = false
 [node name="Notification" parent="." instance=ExtResource("3_847b5")]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.81056, 1.429, -1.27922)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.81056, 1.48997, -1.27922)
 script = ExtResource("7_dmmqi")
 cam_speed = 0.005
 
@@ -138,7 +140,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.008, -0.195956)
 environment = SubResource("Environment_0bhpf")
 
 [node name="SunMoon" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.682149, 0.186205, -0.707107, -0.682149, 0.186205, 0.707107, 0.263334, 0.964705, -1.4013e-45, -43.5587, 23.9249, -0.0955926)
+transform = Transform3D(-0.682149, 0.186205, -0.707107, -0.682149, 0.186205, 0.707107, 0.263334, 0.964705, 0, -43.5587, 23.9249, -0.0955926)
+light_energy = 0.75
 
 [node name="house" parent="." instance=ExtResource("6_ofbxh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.31451, 0, 3.99248)

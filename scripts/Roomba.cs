@@ -16,7 +16,9 @@ public partial class Roomba : CharacterBody3D
 	bool is_on = false;
 	float amount_rotated = 0.0f;
 	double hit_time = 0f;
+	int rotation_direction = 0;
 	State state = State.Forward;
+	private RandomNumberGenerator random;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -24,7 +26,7 @@ public partial class Roomba : CharacterBody3D
     {
         base._Ready();
 		rule = GetNode<Rule>("Rule");
-		rule.rule_name = "Roomba";
+		rule.name = "Roomba";
 		rule.IsOn = (GameManager ctx) => {
 			bool ret = false;
 			if (ctx.time.T >= new mTime(8,0).T) {
@@ -38,7 +40,9 @@ public partial class Roomba : CharacterBody3D
 
 		rule.On += _on;
 		rule.Off += _off;
-    }
+
+		random = new RandomNumberGenerator();
+	}
 	public void _on()
 	{
 		is_on = true;
@@ -86,12 +90,19 @@ public partial class Roomba : CharacterBody3D
 						velocity.X = d.X * move_speed * (time_scale / 2);
 					}
 					if (do_rotate) {
-						RotateY(rotation_amount);
+						if (rotation_direction == 0) {
+							rotation_direction = random.RandiRange(-1, 1);
+							if (rotation_direction == 0)
+								rotation_direction = 1;
+
+						}
+						RotateY(rotation_amount * rotation_direction);
 						amount_rotated += rotation_amount;
 						float rt = target_rotation * MathF.PI / 180f;
 						if (amount_rotated >= rt) {
 							amount_rotated = 0.0f;
 							hit_time = 0;
+							rotation_direction = 0;
 							state = State.Forward;
 						}
 						velocity.Z = 0;

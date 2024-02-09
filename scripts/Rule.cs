@@ -12,8 +12,13 @@ public partial class Rule: Node3D {
     public Type type = Type.Default;
     public Func<GameManager, bool> IsOn = ctx => false;
     private bool status = false;
-    public String rule_name = "";
+    public bool Status {
+        get { return status; }
+    }
+    public String name = "";
     public String notif_prefix = "";
+    public String notif_on_message = "Turned On";
+    public String notif_off_message = "Turned Off";
     public override void _Ready()
     {
         base._Ready();
@@ -27,11 +32,13 @@ public partial class Rule: Node3D {
         String prefix = (notif_prefix == "") ? gm.time.ToString() : notif_prefix;
         if (on) {
             EmitSignal(SignalName.On);
-            notif.CreateNotif(prefix + ":: " + rule_name + " Turned on");
+            notif.CreateNotif(prefix + ":: " + name + " " + notif_on_message);
+            status = true;
         }
         else {
             EmitSignal(SignalName.Off);
-            notif.CreateNotif(prefix + ":: " + rule_name + " Turned off");
+            notif.CreateNotif(prefix + ":: " + name + " " + notif_off_message);
+            status = false;
         }
     }
     private void _listener(GameManager context)
@@ -39,18 +46,21 @@ public partial class Rule: Node3D {
         var notif = context.notification;
         String prefix = (notif_prefix == "") ? context.time.ToString() : notif_prefix;
         if (IsOn(context)) {
-            EmitSignal(SignalName.On);
-            if (!status)
-                notif.CreateNotif(prefix + ":: " + rule_name + " Turned on");
+            if (type == Type.CustomOff)
+                EmitSignal(SignalName.On);
+            if (!status) {
+                EmitSignal(SignalName.On);
+                notif.CreateNotif(prefix + ":: " + name + " " + notif_on_message);
+            }
             status = true;
         }
         else {
             if (type == Type.CustomOff)
                 return;
-            EmitSignal(SignalName.Off);
             if (status) {
+                EmitSignal(SignalName.Off);
                 status = false;
-                notif.CreateNotif(prefix + ":: " + rule_name + " Turned off");
+                notif.CreateNotif(prefix + ":: " + name + " " + notif_off_message);
             }
         }
     }
