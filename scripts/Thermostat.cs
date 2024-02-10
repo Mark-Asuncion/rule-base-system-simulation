@@ -19,10 +19,9 @@ public partial class Thermostat : Node3D
 		gm.TempChanged += (GameManager ctx) => {
 			label.Text = ctx.temp.ToString();
 		};
-		rule.name = "";
-		rule.notif_prefix = "Thermostat Trying to Maintain " + new mTemp(target).ToString();
-		rule.notif_on_message = "";
-		rule.notif_off_message = "";
+		rule.name = "Thermostat";
+		rule.notif_on_message = "Trying to Maintain " + new mTemp(target).ToString();
+		rule.notif_off_message = rule.notif_on_message;
 		rule.IsOn = (GameManager ctx) => {
 			float temp = gm.temp.T;
 			return temp < min || temp > max;

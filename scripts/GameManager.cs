@@ -15,7 +15,7 @@ public partial class GameManager : Node3D
 	[Export] private float time_scale_step = 1f;
 	[Export] private int[] time_in_24hr = {0,0};
 	[Export] private float temp_max_change = 10f;
-	Timer timer;
+	public Timer timer;
 	public mTime time;
 	public mTemp temp;
 	public RandomNumberGenerator random;
@@ -26,19 +26,16 @@ public partial class GameManager : Node3D
 			timer.WaitTime = 1/time_scale;
 		}
 	}
-	private WorldEnvironment env;
 	// t * 360 / 1440 (Map time(min) to 360 degrees rotation)
 	public Vector4 Lerp(Vector4 origin, Vector4 target, float amount)
 	{
 		return origin + (target - origin) * amount;
 	}
-
 	public override void _Ready()
 	{
 		time = new mTime(time_in_24hr[0],time_in_24hr[1]);
 		temp = new mTemp(35f);
 		timer = GetNode<Timer>("Timer");
-		env = GetNode<WorldEnvironment>("WorldEnvironment");
 		notification = GetNode<mNotification>("Notification");
 		ui = GetNode<UI>("ui");
 
@@ -46,6 +43,9 @@ public partial class GameManager : Node3D
 
 		random = new RandomNumberGenerator();
 		timer.Timeout += _TimeChanged;
+		var env = GetNode<SkyBox>("WorldEnvironment");
+		timer.Timeout += env._timeout;
+		env.time = time;
 		_TimeChanged();
 		var anim = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
@@ -70,25 +70,10 @@ public partial class GameManager : Node3D
 			}
 		}
 	}
-	private float NormalizeTime(int min)
-	{
-		return (min * 360f / 1440f) / 360f;
-	}
 	public void _TimeChanged()
 	{
 		time.Increment(1);
 		EmitSignal(SignalName.DayTimeChanged, this);
-		var sky_mat = env.Environment.Sky.SkyMaterial as ShaderMaterial;
-		float norm_time = NormalizeTime(time.T);
-		sky_mat.SetShaderParameter("ratio", norm_time);
-		var light = env.GetChild<DirectionalLight3D>(0);
-		if (norm_time >= 0.3 && norm_time < 0.7) {
-			norm_time = 0.75f;
-		}
-		else if (norm_time >= 0f || norm_time >= 0.7) {
-			norm_time = 0.1f;
-		}
-		light.LightEnergy = norm_time;
 
 		EmitSignal(SignalName.TempChanged, this);
 		float value = random.RandfRange(-temp_max_change,temp_max_change);

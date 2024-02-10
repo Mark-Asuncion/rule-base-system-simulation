@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://eib37j0rr6rg"]
+[gd_scene load_steps=16 format=3 uid="uid://eib37j0rr6rg"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.cs" id="1_t2m3s"]
 [ext_resource type="PackedScene" uid="uid://bmylso8xlkkwm" path="res://scene/ui.tscn" id="2_e03d3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bbf7x1qnaq6l7" path="res://scene/house.tscn" id="6_ofbxh"]
 [ext_resource type="Texture2D" uid="uid://cs5n58xm3yjlh" path="res://shader/skybox.tres" id="6_p3dk3"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="7_dmmqi"]
+[ext_resource type="Script" path="res://scripts/SkyBox.cs" id="7_fcxtu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lsbr0"]
 height = 2.71725
@@ -138,6 +139,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.008, -0.195956)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0bhpf")
+script = ExtResource("7_fcxtu")
 
 [node name="SunMoon" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.682149, 0.186205, -0.707107, -0.682149, 0.186205, 0.707107, 0.263334, 0.964705, 0, -43.5587, 23.9249, -0.0955926)
