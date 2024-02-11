@@ -10,7 +10,7 @@ public partial class SkyBox : WorldEnvironment
 	}
 	public override void _Ready()
 	{
-		var gm = GetParent<GameManager>();
+		var gm = GetTree().Root.GetChild<GameManager>(0);
 	}
 	public void _timeout()
 	{

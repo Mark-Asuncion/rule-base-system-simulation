@@ -35,6 +35,12 @@ public partial class Roomba : CharacterBody3D
 			if (ctx.time.T >= new mTime(10,0).T) {
 				ret = false;
 			}
+			if (ctx.time.T >= new mTime(14,0).T) {
+				ret = true;
+			}
+			if (ctx.time.T >= new mTime(16,0).T) {
+				ret = false;
+			}
 			return ret;
 		};
 
